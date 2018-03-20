@@ -6,4 +6,4 @@
   serial:
     "100%"
   roles:
-    - ../ansible-redis-role
+    - ../ansible-role-redis

@@ -24,7 +24,7 @@ Dependencies
 
 Example Playbook
 ----------------
-Please refer `tests` directory:
+Please refer `tests` directory and `test.sh` file:
 ```
 - hosts: test_server
   become: true
@@ -33,7 +33,7 @@ Please refer `tests` directory:
   serial:
     "100%"
   roles:
-    - ../ansible-redis-role
+    - ../ansible-role-redis
 ```
 
 License

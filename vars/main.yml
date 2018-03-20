@@ -2,3 +2,7 @@
 ### From https://github.com/antirez/redis-hashes
 redis_checksums:
   3.2.11: "sha256:31ae927cab09f90c9ca5954aab7aeecc3bb4da6087d3d12ba0a929ceb54081b5"
+
+## Example vars
+#redis_port: 7001
+#maxmemory: "1024mb"
