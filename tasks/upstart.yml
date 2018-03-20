@@ -1,0 +1,18 @@
+---
+- name: Setup Redis upstart config
+  template:
+    src: upstart/redis.conf.j2
+    dest: "/etc/init/{{ redis_service }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+    force: yes
+
+# need to do a command validation of upstart config; requires file suffix to be .conf; .j2 on pre-inject stage of ansible
+- name: "Validate upstart config"
+  command: "init-checkconf /etc/init/{{ redis_service }}.conf"
+
+- name: "Start redis {{ redis_version }} service on port {{ redis_port }}"
+  service:
+    name: "{{ redis_service }}"
+    state: started

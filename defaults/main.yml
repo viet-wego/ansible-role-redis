@@ -1,0 +1,110 @@
+---
+### System
+#
+#
+overcommit_memory: 1
+# enable selective acknowledgements
+tcp_sack: 1
+# needed for selective acknowledgements
+tcp_timestamps: 1
+# scale the network window
+tcp_window_scaling: 1
+# better congestion algorythm
+tcp_congestion_control: cubic
+# enable syn cookied
+tcp_syncookies: 1
+# recycle sockets quickly
+tcp_tw_recycle: 1
+# no swapping
+swappiness: 0
+# up the number of connections per port
+somaxconn: 10000
+#
+tcp_max_syn_backlog: 10000
+#
+fs_file_max: 2000000
+#
+max_open_files: 500000
+
+
+### Installing config
+redis_version: "3.2.11"
+redis_download_url: "http://download.redis.io/releases/redis-{{ redis_version }}.tar.gz"
+redis_verify_checksum: true
+redis_user: redis
+redis_group: "{{ redis_user }}"
+redis_user_home: "/home/{{ redis_user }}"
+redis_home: "{{ redis_user_home }}/redis-{{ redis_version }}"
+redis_instance: "{{ redis_user_home }}/instances/{{ redis_port }}"
+redis_download_file: "{{ redis_user_home }}/redis-{{ redis_version }}.tar.gz"
+
+### Redis config
+#
+redis_port: 7000
+pidfile: "{{ redis_instance }}/redis.pid"
+logfile: "{{ redis_instance }}/redis.log"
+# debug/verbose/notice/warning
+loglevel: notice
+redis_service: "redis-{{ redis_version }}-{{ redis_port }}"
+
+cluster_enabled: "yes"
+cluster_config_file: "{{ redis_instance }}/nodes.conf"
+## 4s
+cluster_node_timeout: 4000
+## still serve event lost some hash slots
+cluster_require_full_coverage: "no"
+
+## listen from all the network interfaces available
+binding_address: "0.0.0.0"
+
+## allow client from other hosts to connect to Redis
+protected_mode: "no"
+
+## close idle connection after 2h
+timeout: 7200
+
+## disable rdb
+save: "\"\""
+
+## allow write when backgroud save error
+stop_writes_on_bgsave_error: "no"
+## skip the check for maximum performances
+rdbchecksum: "no"
+
+tcp_backlog: 8192
+slave_serve_stale_data: "yes"
+repl_diskless_sync: "yes"
+repl_diskless_sync_delay: 0
+
+## slave ping master interval 8s
+repl_ping_slave_period: 8
+
+## need to be greater than ping interval
+repl_timeout: 60
+
+## yes to save bandwidth
+repl_disable_tcp_nodelay: "yes"
+cluster_slave_validity_factor: 3
+
+## bigger backlog size will reduce fullresync data from master to slave when connection was lost
+repl_backlog_size: "32mb"
+## 5.5GB
+maxmemory: "5767168kb"
+maxmemory_policy: "allkeys-lru"
+
+## disable aof
+appendonly: "no"
+appendfilename: "appendonly.aof"
+
+## fastest, default linux will flush after 30s
+appendfsync: "no"
+## in miliseconds
+slowlog_log_slower_than: 100000
+slowlog_max_len: 50
+
+
+client_output_buffer_limit_normal: "normal 0 0 0"
+client_output_buffer_limit_slave: "slave 256mb 64mb 60"
+client_output_buffer_limit_pubsub: "pubsub 32mb 8mb 60"
+
+hz: 80

@@ -1,0 +1,17 @@
+---
+- name: Create redis group
+  group:
+    gid:
+    name: "{{ redis_group }}"
+    state: present
+    system: no
+
+- name: Create redis user
+  user:
+    uid:
+    name: "{{ redis_user }}"
+    group: "{{ redis_group }}"
+    state: present
+    system: no
+    createhome: yes
+    home: "{{ redis_user_home }}"

@@ -1,0 +1,62 @@
+---
+- name: Configure sysctl
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: yes
+    ignoreerrors: no
+  with_items:
+  - { key: "vm.overcommit_memory", value: "{{ overcommit_memory }}" }
+  - { key: "fs.file-max", value: "{{ fs_file_max }}" }
+  - { key: "net.ipv4.tcp_sack", value: "{{ tcp_sack }}" }
+  - { key: "net.ipv4.tcp_timestamps", value: "{{ tcp_timestamps }}" }
+  - { key: "net.ipv4.tcp_window_scaling", value: "{{ tcp_window_scaling }}" }
+  - { key: "net.ipv4.tcp_congestion_control", value: "{{ tcp_congestion_control }}" }
+  - { key: "net.ipv4.tcp_syncookies", value: "{{ tcp_syncookies }}" }
+  - { key: "net.ipv4.tcp_tw_recycle", value: "{{ tcp_tw_recycle }}" }
+  - { key: "net.ipv4.tcp_max_syn_backlog", value: "{{ tcp_max_syn_backlog }}" }
+  - { key: "net.core.somaxconn", value: "{{ somaxconn }}" }
+  - { key: "vm.swappiness", value: "{{ swappiness }}" }
+
+- name: Update max open files
+  lineinfile:
+    path: /etc/security/limits.conf
+    line: "{{ item.domain }} {{ item.type }} {{ item.key }} {{ item.value }}"
+    backup: yes
+  with_items:
+  - { domain: "{{ redis_user }}", type: hard, key: nofile, value: "{{ max_open_files }}" }
+  - { domain: "{{ redis_user }}", type: soft, key: nofile, value: "{{ max_open_files }}" }
+  - { domain: root, type: hard, key: nofile, value: "{{ max_open_files }}" }
+  - { domain: root, type: soft, key: nofile, value: "{{ max_open_files }}" }
+
+- name: "Enable pam_limits.so"
+  lineinfile:
+    path: "/etc/pam.d/{{ item }}"
+    line: "session required pam_limits.so"
+    create: yes
+    state: present
+    backup: yes
+  with_items:
+  - sudo
+  - common-session-noninteractive
+  - common-session
+
+- name: Disable Linux kernel feature transparent huge pages
+  command: "hugeadm --thp-never"
+
+- name: Create Redis's directory
+  file: 
+    path: "{{ redis_instance }}"
+    owner: "{{ redis_user }}"
+    group: "{{ redis_group }}" 
+    state: directory
+
+- name: Configure redis.conf
+  template:
+    src: "config/{{ redis_version }}/redis.conf.j2"
+    dest: "{{ redis_instance }}/redis.conf"
+    owner: "{{ redis_user }}"
+    group: "{{ redis_group }}"
+    mode: 0660
+    force: yes

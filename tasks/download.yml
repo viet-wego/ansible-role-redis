@@ -1,0 +1,25 @@
+---
+- name: Set redis checksum
+  set_fact:
+    redis_checksum: "{{ redis_checksums[redis_version] }}"
+  when:
+    - redis_verify_checksum|bool
+    - redis_checksum is not defined
+    - redis_version in redis_checksums
+
+- name: Download Redis
+  get_url:
+    url: "{{ redis_download_url }}"
+    dest: "{{ redis_download_file }}"
+    checksum: "{{ redis_checksum|default(omit) }}"
+    owner: "{{ redis_user }}"
+    group: "{{ redis_group }}"
+
+- name: Extract Redis
+  unarchive:
+    src: "{{ redis_download_file }}"
+    dest: "{{ redis_user_home }}"
+    remote_src: yes
+    owner: "{{ redis_user }}"
+    group: "{{ redis_group }}"
+    creates: "{{ redis_user_home }}/src"

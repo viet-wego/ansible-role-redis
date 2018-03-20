@@ -1,0 +1,9 @@
+---
+- hosts: test_server
+  become: true
+  become_user: root
+  become_method: sudo
+  serial:
+    "100%"
+  roles:
+    - ../ansible-redis-role

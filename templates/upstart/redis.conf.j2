@@ -1,0 +1,30 @@
+description "Custom upstart service job for custom installed Redis"
+author "Viet Tran<tdviet12@gmail.com>"
+
+# start/stop service on runlevel
+# refer to http://www.pathbreak.com/blog/ubuntu-startup-init-scripts-runlevels-upstart-jobs-explained
+start on runlevel [2345]
+stop on runlevel [016]
+
+# wait n seconds before sending the signal
+kill timeout 1
+kill signal SIGTERM
+
+# respawn conf
+respawn
+respawn limit 8 120
+
+# set group/user to exec
+#setgid {{ redis_group }}
+#setuid {{ redis_user }}
+
+pre-start script
+    # disbale transparent huge pages
+    exec hugeadm --thp-never
+    # delayed start; provides a windowed buffer on retries to complement respawn
+    sleep 4
+end script
+
+
+# foreground upstart process
+exec sudo -u {{ redis_user }} {{ redis_home }}/src/redis-server {{ redis_instance }}/redis.conf
