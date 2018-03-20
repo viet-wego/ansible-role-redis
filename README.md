@@ -1,4 +1,4 @@
-Redis
+Redis on Ubuntu
 =========
 
 Install Redis on Ubuntu server. Tested for Redis 3.2.11 on Ubuntu 14.04 LTS.
@@ -11,7 +11,10 @@ An Ubuntu server have a user with sudo permission.
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Want to install other versions of Redis:
+- Put your `redis_version` variable in `vars/main.yml`
+- Add checksum for your version to `redis_checksums` in `vars/main.yml`
+- Add config template to `template/[your version]/redis.conf.j2`
 
 
 Dependencies
@@ -23,7 +26,6 @@ Example Playbook
 ----------------
 Please refer `tests` directory:
 ```
----
 - hosts: test_server
   become: true
   become_user: root
