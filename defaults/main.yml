@@ -71,7 +71,7 @@ stop_writes_on_bgsave_error: "no"
 ## skip the check for maximum performances
 rdbchecksum: "no"
 
-tcp_backlog: 8192
+tcp_backlog: 10000
 slave_serve_stale_data: "yes"
 repl_diskless_sync: "yes"
 repl_diskless_sync_delay: 0
