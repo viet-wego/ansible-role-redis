@@ -1,4 +1,4 @@
-test_server ansible_host= ansible_port=22 ansible_user=
+test_server ansible_host=104.197.177.39 ansible_port=22 ansible_user=zumata
 
 
 
