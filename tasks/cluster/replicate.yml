@@ -1,0 +1,13 @@
+---
+- name: Get master node ids
+  shell: "redis-cli -h {{ master_ip }} -p {{ master_port }} cluster nodes | grep {{ item.ip }}:{{ item.port }} | cut -f 1 -d ' ' > {{ redis_user_home }}/{{ item.ip }}_{{ item.port }}.txt"
+  with_items: "{{ masters }}"
+
+- name: Set up slaves script
+  template:
+    src: "cluster/slaves.sh.j2"
+    dest: "{{ redis_user_home }}/slaves.sh"
+    owner: "{{ redis_user }}"
+    mode: 0711
+    force: yes
+  notify: set up slaves

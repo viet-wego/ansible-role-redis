@@ -1,1 +1,8 @@
 ---
+- name: Assign slots for cluster
+  command: "{{ redis_user_home }}/assign_slots.sh"
+  listen: assign hash slots
+
+- name: Set up slaves for cluster
+  command: "{{ redis_user_home }}/slaves.sh"
+  listen: set up slaves

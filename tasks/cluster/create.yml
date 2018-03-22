@@ -1,0 +1,16 @@
+---
+- name: Create Redis cluster
+  shell: "redis-cli -h {{ master_ip }} -p {{ master_port }} cluster meet {{ item.node_ip }} {{ item.node_port }}"
+  with_items: "{{ cluster_nodes }}"
+
+- name: Set up assign slots script
+  template:
+    src: "cluster/assign_slots.sh.j2"
+    dest: "{{ redis_user_home }}/assign_slots.sh"
+    owner: "{{ redis_user }}"
+    mode: 0711
+    force: yes
+  notify: assign hash slots
+
+
+

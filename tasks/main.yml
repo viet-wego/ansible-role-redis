@@ -5,3 +5,5 @@
 - import_tasks: compile.yml
 - import_tasks: configure.yml
 - import_tasks: upstart.yml
+- import_tasks: cluster/cluster.yml
+  when: setup_cluster

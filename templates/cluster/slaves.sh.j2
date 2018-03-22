@@ -1,0 +1,8 @@
+#!/bin/bash
+
+{% for item in slaves %}
+MASTER_ID=$(cat {{ redis_user_home }}/{{ item.master_ip }}_{{ item.master_port }}.txt)
+redis-cli -h {{ item.ip }} -p {{ item.port }} cluster replicate $MASTER_ID
+
+{% endfor %}
+

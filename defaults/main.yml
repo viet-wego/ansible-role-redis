@@ -108,3 +108,33 @@ client_output_buffer_limit_slave: "slave 256mb 64mb 60"
 client_output_buffer_limit_pubsub: "pubsub 32mb 8mb 60"
 
 hz: 80
+
+
+### Cluster
+setup_cluster: no
+
+master_ip: 10.240.0.51
+master_port: 7000
+
+cluster_nodes:
+- { node_ip: 10.240.0.51, node_port: 7001}
+- { node_ip: 10.240.0.51, node_port: 7002}
+- { node_ip: 10.240.0.51, node_port: 7003}
+- { node_ip: 10.240.0.51, node_port: 7004}
+- { node_ip: 10.240.0.51, node_port: 7005}
+
+cluster_slots:
+- { ip: 10.240.0.51, port: 7000, from: 0, to: 5400}
+- { ip: 10.240.0.51, port: 7001, from: 5401, to: 10800}
+- { ip: 10.240.0.51, port: 7002, from: 10801, to: 16383}
+
+masters:
+- {ip: 10.240.0.51, port: 7000}
+- {ip: 10.240.0.51, port: 7001}
+- {ip: 10.240.0.51, port: 7002}
+
+slaves:
+- {ip: 10.240.0.51, port: 7003, master_ip: 10.240.0.51, master_port: 7000}
+- {ip: 10.240.0.51, port: 7004, master_ip: 10.240.0.51, master_port: 7001}
+- {ip: 10.240.0.51, port: 7005, master_ip: 10.240.0.51, master_port: 7002}
+

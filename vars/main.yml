@@ -6,3 +6,4 @@ redis_checksums:
 ## Example vars
 #redis_port: 7005
 #maxmemory: "1024mb"
+#setup_cluster: yes

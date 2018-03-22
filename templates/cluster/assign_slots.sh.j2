@@ -1,0 +1,7 @@
+#!/bin/bash
+
+{% for item in cluster_slots %}
+
+for i in {% raw %}{{% endraw %}{{ item.from }}..{{ item.to }}{% raw %}}{% endraw %}; do redis-cli -h {{ item.ip }} -p {{ item.port }} CLUSTER ADDSLOTS $i; done
+
+{% endfor %}
