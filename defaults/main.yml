@@ -44,7 +44,7 @@ redis_port: 7000
 pidfile: "{{ redis_instance }}/redis.pid"
 logfile: "{{ redis_instance }}/redis.log"
 # debug/verbose/notice/warning
-loglevel: notice
+loglevel: warning
 redis_service: "redis-{{ redis_version }}-{{ redis_port }}"
 
 cluster_enabled: "yes"
@@ -73,7 +73,7 @@ rdbchecksum: "no"
 
 tcp_backlog: 10000
 slave_serve_stale_data: "yes"
-repl_diskless_sync: "yes"
+repl_diskless_sync: "no"
 repl_diskless_sync_delay: 0
 
 ## slave ping master interval 8s
