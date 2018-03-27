@@ -12,7 +12,7 @@
 - name: "Validate upstart config"
   command: "init-checkconf /etc/init/{{ redis_service }}.conf"
 
-- name: "Start redis {{ redis_version }} service on port {{ redis_port }}"
+- name: "Start {{ redis_service }} service on port {{ redis_port }}"
   service:
     name: "{{ redis_service }}"
     state: started
