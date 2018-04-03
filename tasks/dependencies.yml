@@ -19,6 +19,4 @@
     - ruby2.4
 
 - name: Install Redis gem
-  gem:
-    name: redis
-    state: present
+  command: "gem install redis"
