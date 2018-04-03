@@ -1,4 +1,8 @@
 ---
+- name: Add Brightbox ppa for Ruby 2.4
+  apt_repository:
+    repo: ppa:brightbox/ruby-ng
+
 - name: Install dependencies tools
   apt:
     pkg: "{{ item }}"
@@ -12,3 +16,9 @@
     - wget
     - tar
     - hugepages
+    - ruby2.4
+
+- name: Install Redis gem
+  gem:
+    name: redis
+    state: present

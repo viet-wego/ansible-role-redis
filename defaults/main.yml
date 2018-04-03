@@ -60,8 +60,8 @@ binding_address: "0.0.0.0"
 ## allow client from other hosts to connect to Redis
 protected_mode: "no"
 
-## close idle connection after 2h
-timeout: 7200
+## close idle connection after 30 minutes
+timeout: 1800
 
 ## disable rdb
 save: "\"\""
@@ -76,8 +76,8 @@ slave_serve_stale_data: "yes"
 repl_diskless_sync: "no"
 repl_diskless_sync_delay: 0
 
-## slave ping master interval 8s
-repl_ping_slave_period: 8
+## slave ping master interval 5s
+repl_ping_slave_period: 5
 
 ## need to be greater than ping interval
 repl_timeout: 60
@@ -89,7 +89,7 @@ cluster_slave_validity_factor: 3
 ## bigger backlog size will reduce fullresync data from master to slave when connection was lost
 repl_backlog_size: "32mb"
 ## should use not much than 90% of memory, don't forget the memory need to replicate
-maxmemory: "5767168kb"
+maxmemory: "6.75gb"
 maxmemory_policy: "allkeys-lru"
 
 ## disable aof
@@ -112,6 +112,7 @@ hz: 80
 
 ### Cluster
 setup_cluster: no
+set_up_replicate: no
 
 master_ip: 10.240.0.51
 master_port: 7000
