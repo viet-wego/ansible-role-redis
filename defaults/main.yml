@@ -88,8 +88,8 @@ cluster_slave_validity_factor: 3
 
 ## bigger backlog size will reduce fullresync data from master to slave when connection was lost
 repl_backlog_size: "32mb"
-## should use not much than 90% of memory, don't forget the memory need to replicate
-maxmemory: "6.75gb"
+## 6.75gb, should use not much than 90% of memory, don't forget the memory need to replicate
+maxmemory: "6912mb"
 maxmemory_policy: "allkeys-lru"
 
 ## disable aof
