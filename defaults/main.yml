@@ -1,4 +1,11 @@
 ---
+## Varibales to enable steps
+install_dependencies: yes
+create_user: yes
+download_redis: yes
+compile_redis: yes
+configure_redis: yes
+setup_upstart: yes
 ### System
 #
 #

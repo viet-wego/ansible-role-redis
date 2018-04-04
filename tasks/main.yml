@@ -1,9 +1,15 @@
 --- 
 - import_tasks: dependencies.yml
+  when: install_dependencies
 - import_tasks: create_user.yml
+  when: create_user
 - import_tasks: download.yml
+  when: download_redis
 - import_tasks: compile.yml
+  when: compile_redis
 - import_tasks: configure.yml
+  when: configure_redis
 - import_tasks: upstart.yml
+  when: setup_upstart
 - import_tasks: cluster/cluster.yml
   when: setup_cluster
