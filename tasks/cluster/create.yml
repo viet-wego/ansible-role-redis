@@ -1,6 +1,6 @@
 ---
 - name: Create Redis cluster
-  shell: "redis-cli -h {{ master_ip }} -p {{ master_port }} cluster meet {{ item.node_ip }} {{ item.node_port }}"
+  command: "redis-cli -h {{ master_ip }} -p {{ master_port }} cluster meet {{ item.node_ip }} {{ item.node_port }}"
   with_items: "{{ cluster_nodes }}"
 
 - name: Set up assign slots script
