@@ -117,13 +117,14 @@ client_output_buffer_limit_pubsub: "pubsub 32mb 8mb 60"
 hz: 80
 
 
-### Cluster
+### Cluster setup
 setup_cluster: no
-set_up_replicate: no
 
+# node we use to run the cluster setup
 master_ip: 10.240.0.51
 master_port: 7000
 
+# nodes need the master above to meet
 cluster_nodes:
 - { node_ip: 10.240.0.51, node_port: 7001}
 - { node_ip: 10.240.0.51, node_port: 7002}
@@ -131,16 +132,23 @@ cluster_nodes:
 - { node_ip: 10.240.0.51, node_port: 7004}
 - { node_ip: 10.240.0.51, node_port: 7005}
 
+# how you shard the slots
 cluster_slots:
 - { ip: 10.240.0.51, port: 7000, from: 0, to: 5400}
 - { ip: 10.240.0.51, port: 7001, from: 5401, to: 10800}
 - { ip: 10.240.0.51, port: 7002, from: 10801, to: 16383}
 
+
+## Replicate setup
+set_up_replicate: no
+
+# master nodes - use for setup replicate
 masters:
 - {ip: 10.240.0.51, port: 7000}
 - {ip: 10.240.0.51, port: 7001}
 - {ip: 10.240.0.51, port: 7002}
 
+# slave nodes - use to setup replicate
 slaves:
 - {ip: 10.240.0.51, port: 7003, master_ip: 10.240.0.51, master_port: 7000}
 - {ip: 10.240.0.51, port: 7004, master_ip: 10.240.0.51, master_port: 7001}
