@@ -1,7 +1,12 @@
 ---
-- name: Create Redis cluster
-  command: "redis-cli -h {{ master_ip }} -p {{ master_port }} cluster meet {{ item.node_ip }} {{ item.node_port }}"
-  with_items: "{{ cluster_nodes }}"
+- name: Set up create cluster script
+  template:
+    src: "cluster/create.sh.j2"
+    dest: "{{ redis_user_home }}/create.sh"
+    owner: "{{ redis_user }}"
+    mode: 0711
+    force: yes
+  notify: create cluster
 
 - name: Set up assign slots script
   template:

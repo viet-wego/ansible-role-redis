@@ -1,0 +1,8 @@
+#!/bin/bash
+
+{% for item in cluster_nodes %}
+
+redis-cli -h {{ master_ip }} -p {{ master_port }} cluster meet {{ item.node_ip }} {{ item.node_port }};
+sleep {{ sleep_time }}
+
+{% endfor %}

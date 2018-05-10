@@ -1,4 +1,8 @@
 ---
+- name: Createcluster
+  command: "{{ redis_user_home }}/create.sh"
+  listen: create cluster
+
 - name: Assign slots for cluster
   command: "{{ redis_user_home }}/assign_slots.sh"
   listen: assign hash slots

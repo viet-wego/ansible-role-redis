@@ -119,6 +119,8 @@ hz: 80
 
 ### Cluster setup
 setup_cluster: no
+# time to sleep between executing cluster meet command
+sleep_time: 5s
 
 # node we use to run the cluster setup
 master_ip: 10.240.0.51
