@@ -44,6 +44,8 @@ redis_user_home: "/home/{{ redis_user }}"
 redis_home: "{{ redis_user_home }}/redis-{{ redis_version }}"
 redis_instance: "{{ redis_user_home }}/instances/{{ redis_port }}"
 redis_download_file: "{{ redis_user_home }}/redis-{{ redis_version }}.tar.gz"
+# should use the compatible version of ruby library with your redis version, ex: library 4.x cannot work well with redis 3.x
+redis_ruby_version: "3.3.3"
 
 ### Redis config
 #
